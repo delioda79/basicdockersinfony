@@ -1,0 +1,18 @@
+version: '2'
+services:
+  schedule_sql_db:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: AbcdEfg123
+    ports:
+      - "3309:3306"
+  schedule_api:
+    image: schedule_api
+    build: ./docker/web
+    restart: always
+    ports:
+      - "8180:80"
+    links:
+      - schedule_sql_db:sql_server
+    volumes:
+      - ./ScheduleAPI:/var/www/html
